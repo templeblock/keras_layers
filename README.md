@@ -3,7 +3,7 @@
 ## SparseConv2D
 Sparse/Partial Convolution layers allow CNNs to process sparse sensory data. To make the convolution operation invariant against sparsity. The sparsity related information is propagate through the network and the layer output is normalized depending on the number of information-carrying elements in the convolution window.
 
-Sparsity Invariant CNNs [arXiv:1708.06500](https://arxiv.org/abs/1708.06500) 
+Sparsity Invariant CNNs [arXiv:1708.06500](https://arxiv.org/abs/1708.06500)  
 Image Inpainting for Irregular Holes Using Partial Convolutions [arXiv:1804.07723](https://arxiv.org/abs/1804.07723)
 
 ## MaxPoolingWithArgmax2D and MaxUnpooling2D

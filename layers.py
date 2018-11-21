@@ -23,7 +23,7 @@ class SparseConv2D(Layer):
         Sparse Convolution is the same idea as Partial Convolution.
     
     # References
-        [Sparsity Invariant CNNs](https://arxiv.org/abs/1708.06500) 
+        [Sparsity Invariant CNNs](https://arxiv.org/abs/1708.06500)  
         [Image Inpainting for Irregular Holes Using Partial Convolutions](https://arxiv.org/abs/1804.07723)
     """
     def __init__(self,
