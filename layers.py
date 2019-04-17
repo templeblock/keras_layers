@@ -424,21 +424,23 @@ class LayerNormalization(Layer):
 
 
 class Conv2DWeightNorm(Conv2D):
-
-  def build(self, input_shape):
-    self.wn_g = self.add_weight(
-        name='wn_g',
-        shape=(self.filters,),
-        dtype=self.dtype,
-        initializer=initializers.Ones(),
-        trainable=True,
-    )
-    super(Conv2DWeightNorm, self).build(input_shape)
-    square_sum = tf.reduce_sum(
-        tf.square(self.kernel), [0, 1, 2], keepdims=False)
-    inv_norm = tf.rsqrt(square_sum)
-    self.kernel = self.kernel * (inv_norm * self.wn_g)
-
+    """Conv2D Layer with Weight Normalization.
+    
+    # References
+        [Weight Normalization: A Simple Reparameterization to Accelerate Training of Deep Neural Networks](http://arxiv.org/abs/1602.07868)
+    """
+    def __init__(self, filters, kernel_size, eps=1e-6, **kwargs):
+        self.eps = eps
+        super(Conv2DWeightNorm, self).__init__(filters, kernel_size, **kwargs)
+    def build(self, input_shape):
+        self.wn_g = self.add_weight(name='wn_g', 
+                                    shape=(self.filters,),
+                                    dtype=self.dtype, 
+                                    initializer=initializers.Ones(), 
+                                    trainable=True)
+        super(Conv2DWeightNorm, self).build(input_shape)
+        square_sum = K.sum(K.square(self.kernel), [0, 1, 2])
+        self.kernel = self.kernel / K.sqrt(square_sum + self.eps) * self.wn_g
 
 
 def Resize2DBilinear(size):
